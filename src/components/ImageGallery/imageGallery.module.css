@@ -1,0 +1,30 @@
+.form {
+  background-color: beige;
+}
+
+.list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.list-item {
+  width: 320px;
+  max-height: 180px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.list_item > img {
+  max-height: 180px;
+  object-fit: cover;
+}
+
+.list_name {
+}
+
+.list_bio {
+  max-width: 320px;
+}
+
+.list_portfolio {
+}

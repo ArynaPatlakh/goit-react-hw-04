@@ -20,8 +20,10 @@ function App() {
 
   const handleSubmit = (value) => {
     setQuery(() => value.search);
+    setPage(1);
     setTotalPage(0);
     setImages([]);
+    setIsError(false);
   };
 
   const addPage = () => {
@@ -29,11 +31,12 @@ function App() {
   };
 
   useEffect(() => {
-    if (totalPage === page) {
+    if (totalPage > 0 && totalPage === page) {
       toast.success("You already download all images");
     }
   }, [totalPage, page]);
-
+  console.log(page);
+  console.log(totalPage);
   useEffect(() => {
     if (!query) return;
     const getData = async () => {
@@ -45,20 +48,20 @@ function App() {
         setIsload(false);
       } catch {
         setIsError(true);
+        setIsload(false);
       }
     };
     getData();
-  }, [query, page, images]);
-
+  }, [query, page]);
 
   return (
     <>
       <SearchBar onSubmit={handleSubmit} />
-    
+
       {isload && <Load />}
       {images.length != 0 && <ImageGallery images={images} />}
       {isError && <p>Reload your page, and try again, please!</p>}
-      
+
       {totalPage != 0 && totalPage != page && <LoadMore page={addPage} />}
     </>
   );

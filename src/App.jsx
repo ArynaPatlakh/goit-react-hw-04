@@ -3,11 +3,9 @@ import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import LoadMore from "./components/LoadMore/LoadMore";
-
 import { gallery } from "./components/articles-api";
 import Load from "./components/Load/load";
 import toast, { Toaster } from "react-hot-toast";
-
 import ImageModal from "./components/ImageModal/ImageModal";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
@@ -16,7 +14,6 @@ function App() {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-
   const [isload, setIsload] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);

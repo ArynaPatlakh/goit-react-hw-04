@@ -1,10 +1,17 @@
 import s from "./imageGallery.module.css";
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, openModal }) => {
+
   return (
     <ul className={s.list}>
       {images.map((image) => (
-        <li key={image.id} className={s.list_item}>
-          <img src={image.urls.small} alt="" width="320px" />
+        <li key={image.id} className={s.list_item} onClick={() =>openModal(image)} >
+          <img
+        
+            src={image.urls.small}
+            srcSet={image.urls.full}
+            alt={images.alt_description}
+            width="320px"
+          />
         </li>
       ))}
     </ul>
@@ -12,14 +19,3 @@ const ImageGallery = ({ images }) => {
 };
 export default ImageGallery;
 
-{
-  /* <p className={s.list_name}>{result.user.name}</p>
-          <p className={s.list_bio}> {result.user.bio}</p>
-          <a
-            className={s.list_portfolio}
-            target="_blank"
-            href={result.user.portfolio_url}
-          >
-            Link for portfolio
-          </a> */
-}

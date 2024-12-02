@@ -1,5 +1,6 @@
 const ErrorMessage = () => {
-    return (<p className="">Sorry, We can not found your request. Please enter new words</p>)
+    
+    return (<p>Please,Enter you request!</p>)
 }
 
 export default ErrorMessage;

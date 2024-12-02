@@ -56,7 +56,6 @@ function App() {
     const getData = async () => {
       try {
         setIsload(true);
-
         const { results, total_pages } = await gallery(query, page);
         setImages((prev) => [...prev, ...results]);
         setTotalPage(total_pages);
@@ -73,13 +72,13 @@ function App() {
   return (
     <>
       <SearchBar onSubmit={handleSubmit} />
-      {isload && <Load />}
 
       {images.length != 0 ? (
         <ImageGallery images={images} openModal={openModal} />
       ) : (
         <ErrorMessage />
       )}
+      {isload && <Load />}
       {isOpenModal && (
         <ImageModal
           isOpen={isOpenModal}

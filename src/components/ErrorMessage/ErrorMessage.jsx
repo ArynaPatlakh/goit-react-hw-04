@@ -1,6 +1,5 @@
 const ErrorMessage = () => {
-    
-    return (<p>Please,Enter you request!</p>)
-}
+  return <p>Pleas enter word correctly or reload the page</p>;
+};
 
 export default ErrorMessage;

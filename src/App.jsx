@@ -20,9 +20,9 @@ function App() {
   const [imgForModal, setImgForModal] = useState("");
 
   const handleSubmit = (value) => {
-    if (value.search.trim("") === "") {
+    if (value.search.trim("") == "") {
+      setIsError(true);
       toast.error("Please input value!");
-      return;
     }
     setQuery(() => value.search.trim(""));
     setPage(1);
@@ -57,12 +57,17 @@ function App() {
       try {
         setIsload(true);
         const { results, total_pages } = await gallery(query, page);
-        setImages((prev) => [...prev, ...results]);
-        setTotalPage(total_pages);
+        if (results.length === 0) {
+          toast.error("Please enter word correctly or reload the page");
+        } else {
+          setImages((prev) => [...prev, ...results]);
+          setTotalPage(total_pages);
+        }
+
         setIsload(false);
       } catch {
         setIsError(true);
-        toast.error("Pleas enter word correctly or reload the page");
+        toast.error("Please reload the page");
         setIsload(false);
       }
     };
@@ -73,10 +78,8 @@ function App() {
     <>
       <SearchBar onSubmit={handleSubmit} />
 
-      {images.length != 0 ? (
+      {images.length != 0 && (
         <ImageGallery images={images} openModal={openModal} />
-      ) : (
-        <ErrorMessage />
       )}
       {isload && <Load />}
       {isOpenModal && (
@@ -87,7 +90,32 @@ function App() {
           images={images}
         />
       )}
-      {isError && <Toaster />}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
+      {isError && <ErrorMessage />}
       {totalPage != 0 && totalPage != page && <LoadMore page={addPage} />}
     </>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
-import LoadMore from "./components/LoadMore/LoadMOre";
+import LoadMore from "./components/LoadMore/LoadMore";
 
 import { gallery } from "./components/articles-api";
 import Load from "./components/Load/load";

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
-import LoadMore from "./components/LoadMore/LoadMore";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import { gallery } from "./components/articles-api";
 import Load from "./components/Load/load";
 import toast, { Toaster } from "react-hot-toast";
@@ -14,17 +14,18 @@ function App() {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-  const [isload, setIsload] = useState(false);
+  const [isloading, setIsloading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [imgForModal, setImgForModal] = useState("");
 
   const handleSubmit = (value) => {
-    if (value.search.trim("") == "") {
-      setIsError(true);
+    const trimmedQuery = value.search.trim();
+    if (trimmedQuery === "") {
       toast.error("Please input value!");
+      return;
     }
-    setQuery(() => value.search.trim(""));
+    setQuery(trimmedQuery);
     setPage(1);
     setTotalPage(0);
     setImages([]);
@@ -54,21 +55,27 @@ function App() {
     if (!query) return;
 
     const getData = async () => {
+      setIsloading(true);
+      setIsError(false);
+
       try {
-        setIsload(true);
+        setIsloading(true);
+
         const { results, total_pages } = await gallery(query, page);
+
         if (results.length === 0) {
-          toast.error("Please enter word correctly or reload the page");
+          setIsError(true);
+          toast.error("Please enter a valid word or reload the page.");
         } else {
           setImages((prev) => [...prev, ...results]);
           setTotalPage(total_pages);
         }
-
-        setIsload(false);
       } catch {
         setIsError(true);
-        toast.error("Please reload the page");
-        setIsload(false);
+
+        toast.error("An error occurred.Please reload the page");
+      } finally {
+        setIsloading(false);
       }
     };
     getData();
@@ -81,7 +88,7 @@ function App() {
       {images.length != 0 && (
         <ImageGallery images={images} openModal={openModal} />
       )}
-      {isload && <Load />}
+      {isloading && <Load />}
       {isOpenModal && (
         <ImageModal
           isOpen={isOpenModal}
@@ -116,7 +123,7 @@ function App() {
         }}
       />
       {isError && <ErrorMessage />}
-      {totalPage != 0 && totalPage != page && <LoadMore page={addPage} />}
+      {images.length > 0 && totalPage > page && <LoadMoreBtn page={addPage} />}
     </>
   );
 }

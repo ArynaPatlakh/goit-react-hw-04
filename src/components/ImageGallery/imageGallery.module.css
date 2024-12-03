@@ -18,7 +18,4 @@
     1px 6px 20px 1px rgba(0, 0, 0, 0.19);
 }
 
-.list_item > img {
-  max-height: 180px;
-  object-fit: cover;
-}
+
